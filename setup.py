@@ -37,6 +37,8 @@ def get_package_name():
     preferred_device = get_preferred_device()
     if preferred_device == "GPU" and platform.system() != "Darwin":
         package_name = "anylabeling-gpu"
+    elif preferred_device == "DML":
+        package_name = "anylabeling-dml"
     return package_name
 
 
@@ -51,7 +53,7 @@ def get_install_requires():
         "termcolor",
         "opencv-python-headless",
         'PyQt5>=5.15.7; platform_system != "Darwin"',
-        "onnx==1.13.1",
+        "onnx==1.15.0",
         "qimage2ndarray==1.10.0",
         "darkdetect==0.8.0",
     ]
@@ -61,10 +63,13 @@ def get_install_requires():
     # Note: onnxruntime-gpu is not available on macOS
     preferred_device = get_preferred_device()
     if preferred_device == "GPU" and platform.system() != "Darwin":
-        install_requires.append("onnxruntime-gpu==1.14.1")
+        install_requires.append("onnxruntime-gpu==1.16.3")
         print("Building AnyLabeling with GPU support")
+    elif preferred_device == "DML":
+        install_requires.append("onnxruntime-dml==1.16.3")
+        print("Building AnyLabeling with DML support")
     else:
-        install_requires.append("onnxruntime==1.14.1")
+        install_requires.append("onnxruntime==1.16.3")
         print("Building AnyLabeling without GPU support")
 
     return install_requires
