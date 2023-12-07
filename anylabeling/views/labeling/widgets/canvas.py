@@ -709,6 +709,8 @@ class Canvas(
         if not self.bounded_move_shapes(shapes, point - offset):
             self.bounded_move_shapes(shapes, point + offset)
 
+
+
     # QT Overload
     def paintEvent(self, event):  # noqa: C901
         """Paint event for canvas"""
@@ -721,9 +723,12 @@ class Canvas(
             return
 
         p = self._painter
+
         p.begin(self)
-        p.setRenderHint(QtGui.QPainter.Antialiasing)
-        p.setRenderHint(QtGui.QPainter.SmoothPixmapTransform)
+        # p.setRenderHint(QtGui.QPainter.Antialiasing)
+        # p.setRenderHint(QtGui.QPainter.SmoothPixmapTransform)
+        # FIXME
+        # p.setRenderHint(QtGui.QPainter.)
 
         p.scale(self.scale, self.scale)
         p.translate(self.offset_to_center())
@@ -1196,6 +1201,12 @@ class Canvas(
     def load_pixmap(self, pixmap, clear_shapes=True):
         """Load pixmap"""
         self.pixmap = pixmap
+        # set the transformation to Qt.FastTransformation
+
+        # pixmap = pixmap.transformed(
+        #     QtGui.QTransform().scale(self.scale, self.scale)
+        # )
+
         if clear_shapes:
             self.shapes = []
         self.update()
